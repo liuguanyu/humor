@@ -8,35 +8,7 @@ import httplib , urllib
 import urlparse
 import random
 import time
-
-class JsonPatch :
-    @staticmethod
-    def _decode_list(data):
-        rv = []
-        for item in data:
-            if isinstance(item, unicode):
-                item = item.encode('utf-8')
-            elif isinstance(item, list):
-                item = JsonPatch._decode_list(item)
-            elif isinstance(item, dict):
-                item = _decode_dict(item)
-            rv.append(item)
-        return rv
-
-    @staticmethod
-    def _decode_dict(data):
-        rv = {}
-        for key, value in data.iteritems():
-            if isinstance(key, unicode):
-                key = key.encode('utf-8')
-            if isinstance(value, unicode):
-                value = value.encode('utf-8')
-            elif isinstance(value, list):
-                value = JsonPatch._decode_list(value)
-            elif isinstance(value, dict):
-                value = JsonPatch._decode_dict(value)
-            rv[key] = value
-        return rv    
+from jsonpatch import * 
 
 class ReqUtils: 
     @staticmethod
@@ -81,7 +53,7 @@ class ReqUtils:
             time.sleep(2) # 休息两秒
             
             if try_time > 1 :
-                return ReqUtils(url , try_time - 1 , timeout)
+                return ReqUtils.get(url , try_time - 1 , timeout)
             else :
                 raise Exception('Not Complete Task!')  
         else :    
@@ -134,15 +106,15 @@ class PicBedClient:
         data['SIGN'] = hashlib.md5(data["IMGSTREAM"] + "|" + rules + "|" + self._key + "|" + self._src  + "|360IMG").hexdigest()
 
         data = ReqUtils.post(PicBedConf.get_upload_api(self._key) , data);       
-        return json.loads(data , object_hook=JsonPatch._decode_dict)    
+        return json.loads(data , object_hook=JsonPatch.decode_dict)    
 
     def get_res_by_group_id (self , group_id):
         url = PicBedConf.get_query_tasks_url(self._key) + "?GROUPID=" + group_id
         data = ReqUtils.get(url , self._try_time , PicBedConf.PICA_TIMEOUT)     
 
-        return json.loads(data , object_hook=JsonPatch._decode_dict)                
+        return json.loads(data , object_hook=JsonPatch.decode_dict)                
 
-    def add_to_pic_bed (self , stream):
+    def save (self , stream):
         res = self.post_pic(stream)
 
         data = res["DATA"]
@@ -171,7 +143,7 @@ class PicBedClient:
 
 def main():
     pbc = PicBedClient()
-    print pbc.add_to_pic_bed('http://p7.qhimg.com/t016b0fd14ba6b086ae.jpg')
+    print pbc.save('http://p7.qhimg.com/t016b0fd14ba6b086ae.jpg')
 
 if __name__ == "__main__":
     main()

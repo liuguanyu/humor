@@ -1,5 +1,4 @@
 from django.db import models
-import datetime
 
 class Joke(models.Model):
     title = models.CharField(max_length=255)
