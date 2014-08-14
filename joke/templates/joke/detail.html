@@ -1,3 +1,164 @@
-<h1>{{ joke.title }}</h1>
+{% extends "common/base.html" %}
 
-{{ joke.msg | safe}}
+{% block title %}
+   {{joke.title}}
+{% endblock %}
+
+{% block page_css%}
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/detail.css?1" media="screen" />
+{% endblock %}
+
+{% block content %}
+
+<div class="shake-tip">
+    <div><img src="http://p1.qhimg.com/t01097888b3f7a52d0e.jpg"/> 手机摇一摇，笑话随便瞧</div>
+</div>
+
+<article class="container joke-item">
+    <span>{{joke.title}}</span>
+
+    <div class="content">
+         {{joke.msg | safe}}
+    </div>
+    {% comment %}
+    <div class="gmoney">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- 文字链 -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:50px"
+             data-ad-client="ca-pub-1680322424077449"
+             data-ad-slot="3444189494"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    {% endcomment %}
+
+    <div class="page clearfix">
+        {% if prev %}
+        <a href="{{ROOT_URL}}{{DETAIL_URL}}{{ prev.id }}" class="prev"></a>
+        {% endif %}   
+
+        {% if next %}   
+        <a href="{{ROOT_URL}}{{DETAIL_URL}}{{ next.id }}" class="next"></a>
+        {% endif %}   
+    </div>
+    
+    {% comment %}
+    <div class="share clearfix">
+        <span class="txt">分享到：</span>
+        <a href="" class="sina-weibo">新浪微博</a>
+        <a href="" class="qzone">QQ空间</a>
+        <a href="" class="renren">人人网</a>
+    </div>
+    
+    <div class="gmoney">
+        <!-- 尾部广告 -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:50px"
+             data-ad-client="ca-pub-1680322424077449"
+             data-ad-slot="3989246292"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="{{joke.id}}" data-title="{{joke.title}}" data-url="{{ROOT_URL}}{{DETAIL_URL}}{{joke.id}}"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"miehaha"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+    {% endcomment %}
+</article>   
+
+<script>
+    var content="{{joke.title}}",
+        shareImage="{{joke.image}}",
+        title=$.trim("{{joke.title}} {{joke.content}}"),
+        msg=$.trim("{{joke.title}} {{joke.content}}"),
+        shareUrl="{{ROOT_URL}}{{DETAIL_URL}}{{joke.id}}/";
+</script>
+<script src="{{STATIC_URL}}js/share.js"></script>
+<script src="{{STATIC_URL}}js/weixinapi.js"></script>
+<script src="{{STATIC_URL}}js/shake.js"></script>
+<script>
+WeixinApi.ready(function(Api) {
+    // 微信分享的数据
+    var wxData = {
+        "appId": "", // 服务号可以填写appId
+        "imgUrl" : '{{joke.image}}',
+        "link" : '{{ROOT_URL}}{{DETAIL_URL}}{{joke.id}}/',
+        "desc" : '{{joke.title}} {{joke.content}}',
+        "title" : "{{joke.title}} {{joke.content}}"
+    };
+
+    // 分享的回调
+    var wxCallbacks = {
+        // 分享操作开始之前
+        ready : function() {
+            // 你可以在这里对分享的数据进行重组
+            //alert("准备分享");
+        },
+        // 分享被用户自动取消
+        cancel : function(resp) {
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+            //alert("分享被取消");
+        },
+        // 分享失败了
+        fail : function(resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+            alert("难道是网络和我作对？没有分享成功，一会再试试？");
+        },
+        // 分享成功
+        confirm : function(resp) {
+            // 分享成功了，我们是不是可以做一些分享统计呢？
+            //window.location.href='http://192.168.1.128:8080/wwyj/test.html';
+            //alert("分享成功");
+        },
+        // 整个分享过程结束
+        all : function(resp) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+            //alert("分享结束");
+        }
+    };
+
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+});    
+
+Shake.init({
+    support : function (){
+        $(".shake-tip").show();
+    } , 
+    shaking_callback : function (){
+        $(".doc").addClass("shake");
+        $.ajax({
+            url : "/joke/getrandom" , 
+            type : "GET" ,
+            success : function (data){
+                data = JSON.parse(data);
+                var id = data[0].pk;
+                setTimeout (function (){
+                    location.href="/detail/" + id + "/?shake=1";
+                } , 2000);    
+            }
+        });        
+    }
+});
+</script>
+{% endblock %}

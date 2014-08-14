@@ -1,0 +1,116 @@
+.header {
+    margin-right:10px;
+    position:fixed;
+    width:100%;
+    height:60px;
+    background:url(http://p5.qhimg.com/t01694bc4666443b522.jpg) repeat-x;
+    z-index:10;
+}
+
+.logo {
+    position:absolute;
+    left:10px;
+    top:10px;
+    width:189px;
+    height:45px;
+    background:url(http://p9.qhimg.com/t01ab14816b251b91cf.png) no-repeat;
+}
+
+.doc {
+    padding-top:60px;
+}
+
+.load-img {
+    -webkit-animation: inner-loading 1s linear infinite;
+    animation: inner-loading 1s linear infinite;
+    background: url(http://p2.qhimg.com/t019d08046422f2d2c2.png) no-repeat center;
+    -webkit-background-size: 19px;
+    background-size: 19px;
+    display: inline-block;
+    height: 19px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 19px;
+}
+
+@-webkit-keyframes inner-loading {
+    0% {
+        -webkit-transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes inner-loading {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.container {
+    margin:10px;
+    padding:10px;
+    line-height:1.6;
+    border-radius: 5px;
+    background:#fff;
+}
+
+.container img {
+    max-width : 100%;
+}
+
+.joke-item span {
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.8;
+}
+
+.share .txt {
+    float: left;
+    margin-right: 10px;
+    line-height: 30px;
+    font-size: 20px;
+}
+
+.share a {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    text-indent: -99em;
+    background-image: url(http://p1.qhimg.com/t01e136f308b3a14a25.png);
+    background-repeat: no-repeat;
+}
+
+.share .sina-weibo {
+    background-position: 0 0;
+}
+
+.share .qzone {
+    background-position: -120px 0;
+}
+
+.share .renren {
+    background-position: -160px 0;
+}
+.gmoney {
+   margin-top: 10px;
+   text-align:center;
+}
+
+.footer {
+    margin:10px;
+    padding:10px;
+    line-height:1.6;
+    border-radius: 5px;
+    background:#fff;
+    color:#333;
+    font-size:16px;
+    text-align:center;
+}

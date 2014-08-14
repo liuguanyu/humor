@@ -1,0 +1,33 @@
+{% extends "common/base.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% block page_css%}
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/index.css" media="screen" />
+{% endblock %}
+
+{% block content %}
+    <div class="swipe-tip">
+        <span class="load-img"></span>{{SITE_NAME}}正在卖力加载
+    </div>
+
+    <div class="article-container">
+    {% for joke in jokes %}
+    <article class="container joke-item">
+        <span><a href="{{ROOT_URL}}{{DETAIL_URL}}{{joke.id}}">{{joke.title}}</a></span>
+
+        <a href="{{ROOT_URL}}{{DETAIL_URL}}{{joke.id}}">
+            <div class="content">
+                {{joke.msg | safe}}
+            </div>
+        </a>
+    </article>    
+    {% endfor %}
+    </div>
+
+    <div class="bottom-swipe-tip">
+        <span class="load-img"></span>{{SITE_NAME}}正在卖力加载
+    </div>
+
+    <script src="{{STATIC_URL}}js/index.js"></script>
+{% endblock %}

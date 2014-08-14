@@ -1,0 +1,36 @@
+<!doctype html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="applicable-device" content="mobile" />
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+    <title>{% block title %}{{joke.title}}{% endblock %} {{SITE_NAME}}</title>
+    <meta name="description" content="{{SITE_NAME}}，最新最热、爆笑笑话、搞笑图片、动态图、冷笑话、糗事笑话、成人笑话、经典笑话、内涵段子等笑话大全。" />
+    <meta name="keywords" content="笑话,搞笑图片,冷笑话,{{SITE_NAME}}" />
+
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/common.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/grid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/module.css" media="screen" />
+    {% block page_css %}{% endblock %}
+    <!-- zepto.js -->
+    <script src="http://s7.qhimg.com/static/ae7f7d5f238ac0d4.js"></script>
+</head>
+<body>    
+    <div class="header">
+        <a href="/" class="logo"></a>
+    </div>
+
+    <div class="doc">
+        {% block content %}{% endblock %} 
+    </div>   
+    
+    <div class="footer">
+        <a href="/">{{SITE_NAME}}</a> 
+        <script language="javascript" type="text/javascript" src="http://js.users.51.la/17231050.js"></script>
+        <noscript><a href="http://www.51.la/?17231050" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/17231050.asp" style="border:none" /></a></noscript>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+libraries:
+- name: "django"
+  version: "1.5"
+
+cron:
+- description: image prepare
+  url: /imgs/fetchbg
+  schedule: 5 0 * * *
+
+- description: joke hao360 prepare
+  url: /joke/fetchjoke/1
+  schedule: 1 17 * * *
+  
+- description: joke hao360 prepare
+  url: /joke/fetchjoke/2
+  schedule: 1 19 * * *  
+  
